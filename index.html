@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Spit Card Game</title>
+		<link rel="stylesheet" href="main.css" />
+		<!-- main.css file is linked here -->
+	</head>
+
+	<body>
+		<div id="app" class="overlay">
+			<div id="gameGui" class="gameGui">
+				<div id="playerDeck" class="deck player-deck"></div>
+
+				<div id="botDeck" class="deck bot-deck"></div>
+
+				<div id="player" class="hand player-hand">
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<!-- where 5 stacks will appear -->
+
+				<div id="bot" class="hand bot-hand">
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<!-- where 5 stacks will appear -->
+
+				<div id="discard" class="discard">
+					<ul>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+				<!-- where discard pile will appear -->
+			</div>
+			<!-- closing gameGui div -->
+		</div>
+		<!-- closing app div -->
+
+		<script type="module" src="script.js"></script>
+		<!-- Javascript file script -->
+	</body>
+</html>
