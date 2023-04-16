@@ -2,53 +2,51 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Spit Card Game</title>
 		<link rel="stylesheet" href="styles.css" />
-		<!-- main.css file is linked here -->
 	</head>
 
 	<body>
-		<div id="app" class="overlay">
-			<div id="gameGui" class="gameGui">
-				<div id="playerDeck" class="deck player-deck"></div>
-
-				<div id="botDeck" class="deck bot-deck"></div>
-
-				<div id="player" class="hand player-hand">
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<!-- where 5 stacks will appear -->
-
-				<div id="bot" class="hand bot-hand">
-					<ul>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<!-- where 5 stacks will appear -->
-
-				<div id="discard" class="discard">
-					<ul>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-				<!-- where discard pile will appear -->
+		<header>
+			<div class="header-title-container">
+				<h1>Spit Card Game</h1>
 			</div>
-			<!-- closing gameGui div -->
-		</div>
-		<!-- closing app div -->
+			<div class="header-button-container">
+				<div class="game-play-button-container">
+					<button id="playGame" class="play-game">Play Game</button>
+				</div>
+			</div>
+		</header>
 
-		<script type="module" src="script.js"></script>
-		<!-- Javascript file script -->
+		<main>
+			<div class="game-board-container">
+				<div class="bot-deck-container card">
+
+				</div>
+
+				<div class="player-deck-container card">
+
+				</div>
+
+				<div class="game-pile-container">
+					
+				</div>
+
+				<!-- Defining the stack areas of player/bot -->
+				<div id="player-stack-0" class="stack card"></div>
+				<div id="player-stack-1" class="stack card"></div>
+				<div id="player-stack-2" class="stack card"></div>
+				<div id="player-stack-3" class="stack card"></div>
+				<div id="player-stack-4" class="stack card"></div>
+				<div id="bot-stack-0" class="stack card"></div>
+				<div id="bot-stack-1" class="stack card"></div>
+				<div id="bot-stack-2" class="stack card"></div>
+				<div id="bot-stack-3" class="stack card"></div>
+				<div id="bot-stack-4" class="stack card"></div>
+
+			</div>
+		</main>
 	</body>
 </html>

@@ -1,111 +1,115 @@
+:root {
+	--stack-position-Y: 13%;
+	--deck-position-Y: 5%;
+}
+
 html {
 	/* fills entire html page */
 	background-color: rgb(36, 35, 48);
-	margin: 0;
 }
 
-.overlay {
+body {
+	/* height of browser */
+	height: 100vh;
+}
+
+main {
+	border: 1px solid cyan;
+
+	height: 80%;	/* % remaining of body - header space*/
+	display: flex;
 	justify-content: center;
-	align-items: center;
+	position: relative;
 }
 
-.gameGui {
+.card {
+	border-radius: 15%;
+	height: 90px;
+	width: 70px;
+}
+
+.game-board-container {
+	background-color: #008000;
+
 	border-radius: 30px;
-	background-color: green;
 	width: 700px;
 	height: 600px;
-	position: fixed;
+
+	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-60%, -50%); /* positon box (horizontal, vertical) */
+	transform: translate(-50%, -50%);
 }
 
-/*-------    Card  Display    -------*/
+.bot-deck-container {
+	border: 1px solid white;
 
-img {
-	width: 50px;
-	height: 75px;
-	display: inline-block; /* not sure if necessary */
-}
-
-/* ------------------ Where each player's deck will appear ------------------ */
-.deck {
-	align-items: center;
-	justify-content: center;
-
-	/*what the box looks like*/
-	border-radius: 15px;
-	border: dashed;
-	background-color: white;
-	height: 90px; /* dimensions of box */
-	width: 70px;
-}
-
-.player-deck {
-	/*position of box*/
-	order: 1;
 	position: absolute;
-	bottom: 20px;
-	right: 30px;
+	top: 5%;
+	left: 5%;
 }
 
-.bot-deck {
-	order: 2; /* Set the order of the element within the flex container */
-	transform: rotate(180deg); /* Rotate the element 90 degrees */
+.player-deck-container {
+	border: 1px solid white;
+
 	position: absolute;
-	top: 20px;
-	left: 30px;
-}
-/* --------------------------------------------------------------------- */
-
-/* ------------------------- Posiiton of stacks ------------------------ */
-.hand {
-	/*Where I want the 5 stacks to be*/
-	/*border-radius: 15px;*/
-	/*border: solid;*/
-	/*background-color: white;*/
-	height: 90px;
-	width: 450px;
-
-	/* relative positon */
-	position: fixed;
+	bottom: 5%;
+	right: 5%;
 }
 
-.player-hand {
-	/* position of the 5 stacks */
-	bottom: 50px;
-	transform: translate(27%, -40%);
+/*------------------ Positioning the stacks of cards for player/bot ---------------------*/
+.stack {
+	border: 1px solid white;
+	position: absolute;
 }
 
-.bot-hand {
-	/* position of the 5 stacks */
-	top: 50px;
-	transform: translate(27%, 40%);
+#player-stack-0 {
+  bottom: 13%;
+  left: 19%;
 }
 
-ul {
-	display: flex;
-	list-style: none;
-	flex-wrap: nowrap;
-	flex-direction: row;
-	padding: 0;
-	margin: 0;
-	justify-content: space-between;
+#player-stack-1 {
+  bottom: 13%;
+  left: 32%;
 }
 
-li {
-	border-radius: 15px;
-	border: dashed;
-	height: 90px; /* dimensions of box */
-	width: 70px;
+#player-stack-2 {
+  bottom: 13%;
+  left: 45%;
 }
-/* --------------------------------------------------------------------- */
 
-/* ------------------------- Posiiton of discard ------------------------ */
-.discard {
-	width: 200px;
-	position: fixed;
-	top: 43%;
-	left: 35%;
+#player-stack-3 {
+  bottom: 13%;
+  left: 58%;
 }
-/* --------------------------------------------------------------------- */
+
+#player-stack-4 {
+  bottom: 13%;
+  left: 71%;
+}
+
+#bot-stack-0 {
+  top: 13%;
+  left: 71%;
+}
+
+#bot-stack-1 {
+  top: 13%;
+  left: 58%;
+}
+
+#bot-stack-2 {
+  top: 13%;
+  left: 45%;
+}
+
+#bot-stack-3 {
+  top: 13%;
+  left: 32%;
+}
+
+#bot-stack-4 {
+  top: 13%;
+  left: 19%;
+}
+/*-------------------------------------------------------------------------------*/
