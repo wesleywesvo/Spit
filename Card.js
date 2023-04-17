@@ -21,10 +21,14 @@ const Rank = {
 	KING: '13',
 };
 
+const cardImgPath = './images/Playing_card';
+
+
 class Card {
 	constructor(suit, rank) {
 		this.suit = suit;
 		this.rank = rank;
+		this.imgPath = `${cardImgPath}_${suit}_${rank}.jpg`;
 	}
 }
 

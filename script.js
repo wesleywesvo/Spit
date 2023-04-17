@@ -5,9 +5,6 @@ import { Player } from './Player.js';
 const deck = createDeck();		//global var for deck
 
 const cardBackImgPath = './images/Back_Of_Card.jpg';
-const cardImgPath = '.images/Playing_card_';
-const cardImgExt = '.jpg';
-
 
 /*
 	Global variables for positions in CSS
@@ -16,13 +13,9 @@ const topValue = 316;
 const leftValue = 253;
 /* ------------------------------------------- */
 
-
-
 createCards();
 
 function createCards() {
-	console.log(topValue);
-	console.log(leftValue);
 	let diff = 0;
 	for (let i = 0; i < deck.length; i++) {
 		if (i % 4 === 0) {
@@ -31,6 +24,13 @@ function createCards() {
 		createCard(deck[i], topValue - diff, leftValue - diff, i + 1);
 
 	}
+}
+
+function calculateCssPosition() {
+	const deckContainer = document.querySelector('.player-deck-container');
+	const computedStyle = window.getComputedStyle(deckContainer);
+	const topValue = parseInt(computedStyle.getPropertyValue('top'), 10);
+	const leftValue = parseInt(computedStyle.getPropertyValue('left'), 10);
 }
 
 
