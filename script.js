@@ -16,7 +16,6 @@ const topValue = 316;
 const leftValue = 253;
 /* ------------------------------------------- */
 
-console.log(deck);
 
 
 createCards();
@@ -26,7 +25,7 @@ function createCards() {
 	console.log(leftValue);
 	let diff = 0;
 	for (let i = 0; i < deck.length; i++) {
-		if (i % 4 === 0 && i > 0) {
+		if (i % 4 === 0) {
 			diff++;
 		}
 		createCard(deck[i], topValue - diff, leftValue - diff, i + 1);
