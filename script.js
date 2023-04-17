@@ -4,8 +4,6 @@ import { Player } from './Player.js';
 
 const deck = createDeck();		//global var for deck
 
-const cardBackImgPath = './images/Back_Of_Card.jpg';
-
 /*
 	Global variables for positions in CSS
 */
@@ -13,7 +11,20 @@ const topValue = 316;
 const leftValue = 253;
 /* ------------------------------------------- */
 
-createCards();
+console.log(deck);
+
+
+
+initializeGame();
+
+function initializeGame() {
+	createCards();
+}
+
+function splitDeck() {
+
+}
+
 
 function createCards() {
 	let diff = 0;
@@ -43,56 +54,38 @@ function calculateCssPosition() {
 </div>
 */
 function createCard(card, leftValue, topValue, zIndex) {
-	const cardElem = createElement('div');
-	const cardFrontElem = createElement('div');
-	const cardBackElem = createElement('div');
+	const cardElem = document.createElement('div');
+	const cardBackElem = document.createElement('div');
+	const cardBackImg = document.createElement('img');
 
-	const cardFrontImg = createElement('img');
-	const cardBackImg = createElement('img');
+	const cardFrontElem = document.createElement('div');
+	const cardFrontImg = document.createElement('img');
+	
 
 	//add id attribute to card element
-	addIdToElement(cardElem, card.rank); 
+	cardElem.id = `${card.suit}-${card.rank}`;
 
 	//add class to each element
-	addClassToElement(cardElem, 'card');
-	addClassToElement(cardBackElem, 'card-back');
-	addClassToElement(cardBackImg, 'card-img');
-
-	//add image source
-	addSrcToImageElem(cardBackImg, cardBackImgPath);
+	cardElem.classList.add('card');
+	cardBackElem.classList.add('card-back');
+	cardBackImg.classList.add('card-img');
+	
+	
+	cardBackImg.src = card.backImgPath;		//add image source
 
 	//add style attribute --> the position of the cards when created
 	cardElem.style.cssText = `left: ${leftValue}px; top: ${topValue}px; z-index: ${zIndex};`;
 
 	//append child elements to parent
-	addChildElement(cardBackElem, cardBackImg);
-	addChildElement(cardElem, cardBackElem);
+	cardBackElem.appendChild(cardBackImg);
+	cardElem.appendChild(cardBackElem);
 
 
 	//append card div to game-board-container
 	const gameBoard = document.querySelector('.game-board-container');
-	addChildElement(gameBoard, cardElem);
+	gameBoard.appendChild(cardElem);
 }
 
-function createElement(elemType) {
-	return document.createElement(elemType);
-}
-
-function addClassToElement(elem, className) {
-	elem.classList.add(className);
-}
-
-function addIdToElement(elem, id) {
-	elem.id = id;
-}
-
-function addSrcToImageElem(imgElem, src) {
-	imgElem.src = src;
-}
-
-function addChildElement(parentElem, childElem) {
-	parentElem.appendChild(childElem);
-}
 
 /*
 	Return an array of 52 card objects

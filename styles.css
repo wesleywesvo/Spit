@@ -82,6 +82,10 @@ main {
 .stack {
 	border: 1px solid white;
 	position: absolute;
+
+	border-radius: 15%;
+	height: 94px;
+	width: 70px;
 }
 
 #player-stack-0 {

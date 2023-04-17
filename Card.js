@@ -29,6 +29,7 @@ class Card {
 		this.suit = suit;
 		this.rank = rank;
 		this.imgPath = `${cardImgPath}_${suit}_${rank}.jpg`;
+		this.backImgPath = './images/Back_Of_Card.jpg';
 	}
 }
 
