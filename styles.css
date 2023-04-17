@@ -72,6 +72,10 @@ main {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+
+	border-radius: 15%;
+	height: 94px;
+	width: 70px;
 }
 
 /*------------------ Positioning the stacks of cards for player/bot ---------------------*/

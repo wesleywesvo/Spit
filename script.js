@@ -12,21 +12,26 @@ const cardImgExt = '.jpg';
 /*
 	Global variables for positions in CSS
 */
-
+const topValue = 316;
+const leftValue = 253;
+/* ------------------------------------------- */
 
 console.log(deck);
 
-createCard();
 
+createCards();
 
-function getCSSPositions() {
-	//Get the computed values of html elements
-	const deckContainer = document.querySelector('.deck-container');
-	const computedStyle = window.getComputedStyle(deckContainer);
-	const topValue = parseInt(computedStyle.getPropertyValue('top'), 10);
-	const leftValue = parseInt(computedStyle.getPropertyValue('left'), 10);
+function createCards() {
+	console.log(topValue);
+	console.log(leftValue);
+	let diff = 0;
+	for (let i = 0; i < deck.length; i++) {
+		if (i % 4 === 0 && i > 0) {
+			diff++;
+		}
+		createCard(deck[i], topValue - diff, leftValue - diff, i + 1);
 
-	console.log(topValue, leftValue);
+	}
 }
 
 
@@ -38,13 +43,16 @@ function getCSSPositions() {
 	<div class="card-front"></div>
 </div>
 */
-function createCard() {
+function createCard(card, leftValue, topValue, zIndex) {
 	const cardElem = createElement('div');
 	const cardFrontElem = createElement('div');
 	const cardBackElem = createElement('div');
 
 	const cardFrontImg = createElement('img');
 	const cardBackImg = createElement('img');
+
+	//add id attribute to card element
+	addIdToElement(cardElem, card.rank); 
 
 	//add class to each element
 	addClassToElement(cardElem, 'card');
@@ -54,12 +62,17 @@ function createCard() {
 	//add image source
 	addSrcToImageElem(cardBackImg, cardBackImgPath);
 
+	//add style attribute --> the position of the cards when created
+	cardElem.style.cssText = `left: ${leftValue}px; top: ${topValue}px; z-index: ${zIndex};`;
+
 	//append child elements to parent
 	addChildElement(cardBackElem, cardBackImg);
 	addChildElement(cardElem, cardBackElem);
 
-	console.log(cardElem);
 
+	//append card div to game-board-container
+	const gameBoard = document.querySelector('.game-board-container');
+	addChildElement(gameBoard, cardElem);
 }
 
 function createElement(elemType) {
@@ -94,23 +107,14 @@ function createDeck() {
 		}
 	}
 
-	/*
+	
 	//Shuffle the deck
 	for (let i = deck.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[deck[i], deck[j]] = [deck[j], deck[i]];
 	}
-	*/
+	
 	return deck;
 }
 
 
-
-
-
-
-initializeGame();
-
-function initializeGame() {
-	
-}
