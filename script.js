@@ -4,14 +4,7 @@ import { Player } from './Player.js';
 
 const deck = createDeck();		//global var for deck
 
-/*
-	Global variables for positions in CSS
-*/
-const topValue = 316;
-const leftValue = 253;
-/* ------------------------------------------- */
 
-console.log(deck);
 
 
 
@@ -19,14 +12,42 @@ initializeGame();
 
 function initializeGame() {
 	createCards();
+
+	/*create animation transition of dealing the deck*/
+	splitDeck();
 }
 
 function splitDeck() {
+	const cards = document.querySelectorAll('.game-board-container .card');
 
+	const playerDeck = document.querySelector('.player-deck-container');
+	const botDeck = document.querySelector('.bot-deck-container');
+	
+	
+	for (let i = cards.length - 1; i >= 0; i--) {
+		if (i % 2 === 0) {
+			cards[i].style.top = `0`;
+			cards[i].style.left = `0`;
+			playerDeck.appendChild(cards[i]);
+		}
+		else {
+			cards[i].style.top = `0`;
+			cards[i].style.left = `0`;
+			botDeck.appendChild(cards[i]);
+		}
+	}
 }
 
 
 function createCards() {
+	/*
+	find positions for center of board -- this function occurs at
+	initialization of game
+	*/
+	const values = calculateCssPosition('.deck-container');
+	const topValue = values[0];
+	const leftValue = values[1];
+
 	let diff = 0;
 	for (let i = 0; i < deck.length; i++) {
 		if (i % 4 === 0) {
@@ -37,11 +58,24 @@ function createCards() {
 	}
 }
 
-function calculateCssPosition() {
-	const deckContainer = document.querySelector('.player-deck-container');
+
+/*
+No idea why topVal and leftVal calculations are flipped, but results are acceptable
+*/
+function calculateCssPosition(container) {
+	const deckContainer = document.querySelector(container);
 	const computedStyle = window.getComputedStyle(deckContainer);
-	const topValue = parseInt(computedStyle.getPropertyValue('top'), 10);
-	const leftValue = parseInt(computedStyle.getPropertyValue('left'), 10);
+	let topValue = parseInt(computedStyle.getPropertyValue('top'), 10);
+	let leftValue = parseInt(computedStyle.getPropertyValue('left'), 10);
+	const heightValue = parseInt(computedStyle.getPropertyValue('height'), 10);
+	const widthValue = parseInt(computedStyle.getPropertyValue('width'), 10);
+	const bottomValue = topValue - heightValue;
+	const rightValue = leftValue - widthValue;
+
+
+	topValue = Math.ceil((leftValue + rightValue) / 2);
+	leftValue = Math.ceil((topValue + bottomValue) / 2);
+	return [topValue, leftValue];
 }
 
 
