@@ -53,25 +53,27 @@ main {
 	border: 1px solid white;
 
 	position: absolute;
-	top: 5%;
-	left: 5%;
+	top: 30px;
+	left: 35px;
 }
 
 .player-deck-container {
 	border: 1px solid white;
 
 	position: absolute;
-	bottom: 5%;
-	right: 5%;
+	top: 474px;
+	left: 593px;
 }
 
 .deck-container {		/* placeholder css code for center of board pixels */
 	border: 1px solid white;
 
 	position: absolute;
-	top: 50%;
+	top: 253px;
+	left: 316px;
+	/*top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);*/
 
 	border-radius: 15%;
 	height: 94px;
@@ -89,52 +91,52 @@ main {
 }
 
 #player-stack-0 {
-  bottom: 13%;
-  left: 19%;
+  top: 426px;
+  left: 133px;
 }
 
 #player-stack-1 {
-  bottom: 13%;
-  left: 32%;
+  top: 426px;
+  left: 224px;
 }
 
 #player-stack-2 {
-  bottom: 13%;
-  left: 45%;
+  top: 426px;
+  left: 315px;
 }
 
 #player-stack-3 {
-  bottom: 13%;
-  left: 58%;
+  top: 426px;
+  left: 406px;
 }
 
 #player-stack-4 {
-  bottom: 13%;
-  left: 71%;
+  top: 426px;
+  left: 497px;
 }
 
 #bot-stack-0 {
-  top: 13%;
-  left: 71%;
+  top: 78px;
+  left: 497px;
 }
 
 #bot-stack-1 {
-  top: 13%;
-  left: 58%;
+  top: 78px;
+  left: 406px;
 }
 
 #bot-stack-2 {
-  top: 13%;
-  left: 45%;
+  top: 78px;
+  left: 315px;
 }
 
 #bot-stack-3 {
-  top: 13%;
-  left: 32%;
+  top: 78px;
+  left: 224px;
 }
 
 #bot-stack-4 {
-  top: 13%;
-  left: 19%;
+  top: 78px;
+  left: 133px;
 }
 /*-------------------------------------------------------------------------------*/
