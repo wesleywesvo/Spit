@@ -66,11 +66,11 @@ main {
 }
 
 .deck-container {		/* placeholder css code for center of board pixels */
-	border: 1px solid white;
+	/*border: 1px solid white;*/
 
 	position: absolute;
 	top: 253px;
-	left: 316px;
+	left: 315px;
 	/*top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);*/

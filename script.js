@@ -1,8 +1,21 @@
 import { Card, Suit, Rank } from './Card.js';
 import { Player } from './Player.js';
 
-
+/* Global Variables */
 const deck = createDeck();		//global var for deck
+
+const deckContainer = document.querySelector('.deck-container');
+const playerDeck = document.querySelector('.player-deck-container');
+const botDeck = document.querySelector('.bot-deck-container');
+const reload = document.querySelector('.reload');
+
+
+const playerDeckTop = '221';	//parentTop - 12
+const playerDeckLeft = '277';	//parentLeft - 12
+const botDeckTop = '-223'
+const botDeckLeft = '-281'
+
+/* ------------------------------- */
 
 
 
@@ -14,61 +27,51 @@ function initializeGame() {
 	createCards();
 
 	/*create animation transition of dealing the deck*/
-	const deckContainer = document.querySelector('.deck-container');
-	//deckContainer.addEventListener('click', function() {
+	deckContainer.addEventListener('click', function() {
 		splitDeck();
-	//})
+	});
+
+
+
+	/* reload page */
+	reload.addEventListener('click', function () {
+		location.reload();
+	});
 }
 
 function splitDeck() {
 	const cards = document.querySelectorAll('.deck-container > .card');
-
-	const playerDeck = document.querySelector('.player-deck-container');
-	const botDeck = document.querySelector('.bot-deck-container');
-	
-	let target;
-	let cardChild = cards[51];
-
-	cardChild.addEventListener('click', function() {
-		changeDiv(playerDeck, cardChild);
-	})
-
-	cardChild = cards[50];
-	cardChild.addEventListener('click', function() {
-		changeDiv(botDeck, cardChild);
-	})
-	/*for (let i = cards.length - 1; i >= 0; i--) {
+	let diff = 0;
+	for (let i = cards.length - 1; i >= 0; i--) {
+		if (i % 4 === 0) diff++;
 		if (i % 2 === 1) {
-			target = playerDeck;
+			changeDiv(playerDeck, cards[i], playerDeckTop, playerDeckLeft, 52 - i, diff);
 		}
 		else if (i % 2 === 0) {
-			target = botDeck;
+			changeDiv(botDeck, cards[i], botDeckTop, botDeckLeft, 52 - i, diff);
 		}
-		changeDiv(target, cards[i]);
-	}*/
-	
-
+	}
 }
 
-
-function changeDiv(target, child) {
-	var rect = child.getBoundingClientRect();
-	target.appendChild(child);
-	TweenMax.set(child, { x: 0, y: 0 });
-	var newRect = child.getBoundingClientRect();
-
-console.log(`x:${rect.left - newRect.left} y: ${rect.top - newRect.top}`);
-
-	TweenMax.from(child, 1, {
-		x: rect.left - newRect.left,
-		y: rect.top - newRect.top,
-		ease: CustomEase.create(
-			'custom',
-			'M0,0 C0.094,0.422 0,0.704 0.042,0.856 0.044,0.866 0.082,0.964 0.106,0.98 0.129,0.995 0.252,1 0.272,1 0.308,1 0.444,1 0.478,1 0.64,1 0.596,1 1,1 '
-		),
-	});
+/*
+Function using GSAP animations to move child element to target location
+and then is appended to a new parent
+*/
+function changeDiv(target, child, targetTop, targetLeft, i, diff) {
+	gsap.to(child, {
+		top: targetTop - diff,
+		left: targetLeft - diff,
+		duration: 0.2,
+		delay: (0.02 * i),
+		onComplete: () => {
+			child.style.top = `${0-diff}px`;
+			child.style.left = `${0-diff}px`;
+			child.style.zIndex = i;
+			target.appendChild(child); 
+		},
+		ease: Power4
+	})
 }
-
 
 
 function createCards() {
@@ -79,7 +82,6 @@ function createCards() {
 			diff++;
 		}
 		createCard(deck[i], 0 - diff, 0 - diff, i + 1);
-
 	}
 }
 
@@ -122,7 +124,6 @@ function createCard(card, leftValue, topValue, zIndex) {
 	
 	cardElem.card = card;	//add custom property 'card' and assign Card object
 	//append card div to deck-container
-	const deckContainer = document.querySelector('.deck-container');
 	deckContainer.appendChild(cardElem);
 }
 
@@ -141,10 +142,10 @@ function createDeck() {
 
 	
 	//Shuffle the deck
-	for (let i = deck.length - 1; i > 0; i--) {
+	/*for (let i = deck.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[deck[i], deck[j]] = [deck[j], deck[i]];
-	}
+	}*/
 	
 	return deck;
 }
