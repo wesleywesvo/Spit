@@ -43,7 +43,7 @@ function splitDeck() {
 	const cards = document.querySelectorAll('.deck-container > .card');
 	let diff = 0;
 	for (let i = cards.length - 1; i >= 0; i--) {
-		if (i % 4 === 0) diff++;
+		if (i % 8 === 0) diff++;
 		if (i % 2 === 1) {
 			changeDiv(playerDeck, cards[i], playerDeckTop, playerDeckLeft, 52 - i, diff);
 		}
