@@ -2,16 +2,19 @@ import { Card, Suit, Rank } from './Card.js';
 import { Player } from './Player.js';
 
 /* Global Variables */
+let z = 0;		//global z-index value
 const deck = createDeck();		//global var for deck
 
-const deckContainer = document.querySelector('.deck-container');
-const playerDeck = document.querySelector('.player-deck-container');
-const botDeck = document.querySelector('.bot-deck-container');
+let deckContainer = document.querySelector('.deck-container');
+let cards = deckContainer.children;
+
+const playerDeckContainer = document.querySelector('.player-deck-container');
+const botDeckContainer = document.querySelector('.bot-deck-container');
 const reload = document.querySelector('.reload');
 
-var playerDeckRect = playerDeck.getBoundingClientRect();
+var playerDeckRect = playerDeckContainer.getBoundingClientRect();
 //console.log(playerDeckRect);
-var botDeckRect = botDeck.getBoundingClientRect();
+var botDeckRect = botDeckContainer.getBoundingClientRect();
 //console.log(botDeckRect);
 var deckRect = deckContainer.getBoundingClientRect();
 //console.log(deckRect);
@@ -23,7 +26,10 @@ const botDeckLeft = botDeckRect.left - deckRect.left;		//-281
 
 /* ------------------------------- */
 
-
+/* reload page */
+reload.addEventListener('click', function () {
+	location.reload();
+});
 
 
 
@@ -36,47 +42,52 @@ function initializeGame() {
 	deckContainer.addEventListener('click', function() {
 		splitDeck();
 	});
-
-
-
-	/* reload page */
-	reload.addEventListener('click', function () {
-		location.reload();
-	});
+	
 }
+
+
+function dealDeckToStack() {
+	const playerDeck = document.querySelectorAll('.player-deck-container > .card');
+	const botDeck = document.querySelectorAll('.bot-deck-container > .card');
+
+	console.log('testtestes');
+	console.log(cards);
+	//probably have to use GSAP timeline and append Tweens to have
+	//two animations run at the same time.
+	
+}
+
 
 function splitDeck() {
-	const cards = document.querySelectorAll('.deck-container > .card');
 	let numCards = cards.length - 1;
+	
+	let tl = gsap.timeline();
 	for (let i = numCards; i >= 0; i--) {
 		let diff = Math.floor( (i - numCards) / 8);
-		if (i % 2 != 0) {
-			changeDiv(playerDeck, cards[i], playerDeckTop, playerDeckLeft, 52 - i, diff);
-		}
-		else {
-			changeDiv(botDeck, cards[i], botDeckTop, botDeckLeft, 52 - i, diff);
-		}
-	}
-}
 
-/*
-Function using GSAP animations to move child element to target location
-and then is appended to a new parent
-*/
-function changeDiv(target, child, targetTop, targetLeft, i, diff) {
-	gsap.to(child, {
-		top: targetTop + diff,
-		left: targetLeft + diff,
-		duration: 0.2,
-		delay: (0.02 * i),
-		onComplete: () => {
-			child.style.top = `${0 + diff}px`;
-			child.style.left = `${0 + diff}px`;
-			child.style.zIndex = i;
-			target.appendChild(child); 
-		},
-		ease: Power4
-	})
+		((target, targetTop, targetLeft) => {
+			let tween = gsap.to(cards[i], {
+				top: targetTop + diff,
+				left: targetLeft + diff,
+				duration: 0.2,
+				//delay: 0.02 * i,
+				onComplete: () => {
+					cards[i].style.top = `${0 + diff}px`;
+					cards[i].style.left = `${0 + diff}px`;
+					cards[i].style.zIndex = z++;
+					target.appendChild(cards[i]);
+
+					if (i === 0) dealDeckToStack();
+				},
+				ease: Power4,
+			});
+			tl.add(tween, "-=0.18");	//timeline delay --> make tween run 0.02 delay
+		}) (i % 2 === 1 ? playerDeckContainer : botDeckContainer,
+			i % 2 === 1 ? playerDeckTop : botDeckTop,
+			i % 2 === 1 ? playerDeckLeft : botDeckLeft);
+	}
+
+	tl.play();
 }
 
 
@@ -84,7 +95,7 @@ function createCards() {
 	//diff for position -- visual purposes
 	for (let i = 0; i < deck.length; i++) {
 		let diff = Math.floor(i / 4);
-		createCard(deck[i], 0 - diff, 0 - diff, i + 1);
+		createCard(deck[i], 0 - diff, 0 - diff, z++);
 	}
 }
 
