@@ -9,11 +9,17 @@ const playerDeck = document.querySelector('.player-deck-container');
 const botDeck = document.querySelector('.bot-deck-container');
 const reload = document.querySelector('.reload');
 
+var playerDeckRect = playerDeck.getBoundingClientRect();
+//console.log(playerDeckRect);
+var botDeckRect = botDeck.getBoundingClientRect();
+//console.log(botDeckRect);
+var deckRect = deckContainer.getBoundingClientRect();
+//console.log(deckRect);
 
-const playerDeckTop = '221';	//parentTop - 12
-const playerDeckLeft = '277';	//parentLeft - 12
-const botDeckTop = '-223'
-const botDeckLeft = '-281'
+const playerDeckTop = playerDeckRect.top - deckRect.top;	//221
+const playerDeckLeft = playerDeckRect.left - deckRect.left;	//277
+const botDeckTop = botDeckRect.top - deckRect.top; 			//-223
+const botDeckLeft = botDeckRect.left - deckRect.left;		//-281
 
 /* ------------------------------- */
 
@@ -41,13 +47,13 @@ function initializeGame() {
 
 function splitDeck() {
 	const cards = document.querySelectorAll('.deck-container > .card');
-	let diff = 0;
-	for (let i = cards.length - 1; i >= 0; i--) {
-		if (i % 8 === 0) diff++;
-		if (i % 2 === 1) {
+	let numCards = cards.length - 1;
+	for (let i = numCards; i >= 0; i--) {
+		let diff = Math.floor( (i - numCards) / 8);
+		if (i % 2 != 0) {
 			changeDiv(playerDeck, cards[i], playerDeckTop, playerDeckLeft, 52 - i, diff);
 		}
-		else if (i % 2 === 0) {
+		else {
 			changeDiv(botDeck, cards[i], botDeckTop, botDeckLeft, 52 - i, diff);
 		}
 	}
@@ -59,13 +65,13 @@ and then is appended to a new parent
 */
 function changeDiv(target, child, targetTop, targetLeft, i, diff) {
 	gsap.to(child, {
-		top: targetTop - diff,
-		left: targetLeft - diff,
+		top: targetTop + diff,
+		left: targetLeft + diff,
 		duration: 0.2,
 		delay: (0.02 * i),
 		onComplete: () => {
-			child.style.top = `${0-diff}px`;
-			child.style.left = `${0-diff}px`;
+			child.style.top = `${0 + diff}px`;
+			child.style.left = `${0 + diff}px`;
 			child.style.zIndex = i;
 			target.appendChild(child); 
 		},
@@ -76,11 +82,8 @@ function changeDiv(target, child, targetTop, targetLeft, i, diff) {
 
 function createCards() {
 	//diff for position -- visual purposes
-	let diff = 0;
 	for (let i = 0; i < deck.length; i++) {
-		if (i % 4 === 0) {
-			diff++;
-		}
+		let diff = Math.floor(i / 4);
 		createCard(deck[i], 0 - diff, 0 - diff, i + 1);
 	}
 }
