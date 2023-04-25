@@ -5,11 +5,13 @@ import { Player } from './Player.js';
 let z = 0;		//global z-index value
 const deck = createDeck();		//global var for deck
 
-let deckContainer = document.querySelector('.deck-container');
-let cards = deckContainer.children;
+const deckContainer = document.querySelector('.deck-container');
+const cards = deckContainer.children;
 
 const playerDeckContainer = document.querySelector('.player-deck-container');
+const playerDeck = playerDeckContainer.children;
 const botDeckContainer = document.querySelector('.bot-deck-container');
+const botDeck = botDeckContainer.children;
 const reload = document.querySelector('.reload');
 
 var playerDeckRect = playerDeckContainer.getBoundingClientRect();
@@ -47,17 +49,49 @@ function initializeGame() {
 
 
 function dealDeckToStack() {
-	const playerDeck = document.querySelectorAll('.player-deck-container > .card');
-	const botDeck = document.querySelectorAll('.bot-deck-container > .card');
 
 	console.log('testtestes');
 	console.log(cards);
 	//probably have to use GSAP timeline and append Tweens to have
 	//two animations run at the same time.
+	console.log(playerDeck);
+	console.log(botDeck);
+
+
+
+	let playerTL = gsap.timeline();
+	let botTL = gsap.timeline();
+
+	for (let i = 0; i < 5; i++) {
+		for (let j = i, k = playerDeck.length - 1; j < 5; j++, k--) {
+			let playerStackContainer = document.querySelector(`#player-stack-${j}`);
+			let playerStackRect = playerStackContainer.getBoundingClientRect();
+
+			let tween = gsap.to(playerDeck[k], {
+				top: playerStackRect.top,
+				left: playerStackRect.left,
+				duration: 0.5,
+				//delay: 0.02 * i,
+				onComplete: () => {
+					playerDeck[k].style.top = `${0}px`;
+					playerDeck[k].style.left = `${0}px`;
+					playerDeck[k].style.zIndex = z++;
+					playerStackContainer.appendChild(playerDeck[k]);
+				},
+				ease: Power4,
+			});
+			playerTL.add(tween);
+		}
+	}
+	playerTL.play();
+
 	
 }
 
 
+/*
+Deal cards to each player and append card elements to new parents
+*/
 function splitDeck() {
 	let numCards = cards.length - 1;
 	
