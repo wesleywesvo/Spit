@@ -49,43 +49,80 @@ function initializeGame() {
 
 
 function dealDeckToStack() {
-
-	console.log('testtestes');
-	console.log(cards);
-	//probably have to use GSAP timeline and append Tweens to have
-	//two animations run at the same time.
-	console.log(playerDeck);
-	console.log(botDeck);
-
-
-
 	let playerTL = gsap.timeline();
 	let botTL = gsap.timeline();
 
+	let k;
+
+	k = playerDeck.length - 1;
 	for (let i = 0; i < 5; i++) {
-		for (let j = i, k = playerDeck.length - 1; j < 5; j++, k--) {
+		for (let j = i; j < 5; j++, k--) {
 			let playerStackContainer = document.querySelector(`#player-stack-${j}`);
 			let playerStackRect = playerStackContainer.getBoundingClientRect();
 
-			let tween = gsap.to(playerDeck[k], {
-				top: playerStackRect.top,
-				left: playerStackRect.left,
+			let child = playerDeck[k];
+
+			let tween = gsap.to(child, {
+				top: playerStackRect.top - playerDeckRect.top,
+				left: playerStackRect.left - playerDeckRect.left,
 				duration: 0.5,
 				//delay: 0.02 * i,
 				onComplete: () => {
-					playerDeck[k].style.top = `${0}px`;
-					playerDeck[k].style.left = `${0}px`;
-					playerDeck[k].style.zIndex = z++;
-					playerStackContainer.appendChild(playerDeck[k]);
+					child.style.top = `${0}px`;
+					child.style.left = `${0}px`;
+					child.style.zIndex = z++;
+					child.style.transform = `rotate(${Math.round(Math.random() * 4) * (Math.round(Math.random()) ? 1 : -1)}deg)`;
+					playerStackContainer.appendChild(child);
+
+					if (j === i) {
+						//the first card of each stack is dealt upright
+						let imgElem = child.querySelector('img');
+						imgElem.src = child.card.imgPath;
+					}
 				},
 				ease: Power4,
 			});
 			playerTL.add(tween);
 		}
 	}
-	playerTL.play();
-
 	
+
+	k = botDeck.length - 1;
+	for (let i = 0; i < 5; i++) {
+		for (let j = i; j < 5; j++, k--) {
+			let botStackContainer = document.querySelector(`#bot-stack-${j}`);
+			let botStackRect = botStackContainer.getBoundingClientRect();
+
+			let child = botDeck[k];
+
+			let tween = gsap.to(child, {
+				top: botStackRect.top - botDeckRect.top,
+				left: botStackRect.left - botDeckRect.left,
+				duration: 0.5,
+				//delay: 0.02 * i,
+				onComplete: () => {
+					child.style.top = `${0}px`;
+					child.style.left = `${0}px`;
+					child.style.zIndex = z++;
+					child.style.transform = `rotate(${
+						Math.round(Math.random() * 4) * (Math.round(Math.random()) ? 1 : -1)
+					}deg)`;
+					botStackContainer.appendChild(child);
+					
+					if (j === i) {
+						//the first card of each stack is dealt upright
+						let imgElem = child.querySelector('img');
+						imgElem.src = child.card.imgPath;
+					}
+				},
+				ease: Power4,
+			});
+			botTL.add(tween);
+		}
+	}
+	
+	playerTL.play();
+	botTL.play();
 }
 
 
@@ -143,11 +180,8 @@ function createCards() {
 */
 function createCard(card, leftValue, topValue, zIndex) {
 	const cardElem = document.createElement('div');
-	const cardBackElem = document.createElement('div');
-	const cardBackImg = document.createElement('img');
+	const cardImg = document.createElement('img');
 
-	const cardFrontElem = document.createElement('div');
-	const cardFrontImg = document.createElement('img');
 	
 
 	//add id attribute to card element
@@ -155,19 +189,15 @@ function createCard(card, leftValue, topValue, zIndex) {
 
 	//add class to each element
 	cardElem.classList.add('card');
-	cardBackElem.classList.add('card-back');
-	cardBackImg.classList.add('card-img');
+	cardImg.classList.add('card-img');
 	
-	
-	cardBackImg.src = card.backImgPath;		//add image source
+	cardImg.src = card.backImgPath;				//add back image source
 
 	//add style attribute --> the position of the cards when created
 	cardElem.style.cssText = `left: ${leftValue}px; top: ${topValue}px; z-index: ${zIndex};`;
 
 	//append child elements to parent
-	cardBackElem.appendChild(cardBackImg);
-	cardElem.appendChild(cardBackElem);
-
+	cardElem.appendChild(cardImg);
 
 	
 	cardElem.card = card;	//add custom property 'card' and assign Card object

@@ -22,7 +22,7 @@ main {
 	position: relative;
 }
 
-.card {
+.card, .card-img{
 	position: absolute;
 	cursor: pointer;
 
@@ -31,10 +31,10 @@ main {
 	width: 70px;
 }
 
-.card-img {
+/*.card-img {
 	height: 100%;
 	width: 100%;
-}
+}*/
 
 .game-board-container {
 	background-color: #008000;
