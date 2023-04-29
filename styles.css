@@ -79,6 +79,25 @@ main {
 	height: 94px;
 	width: 70px;
 }
+/* ----------------------- P{ositioning of game pile ---------------------------------- */
+.stack {
+	border: 1px solid white;
+	position: absolute;
+
+	border-radius: 15%;
+	height: 94px;
+	width: 70px;
+}
+
+	#pile-0 {
+	top: 252px;
+	left: 224px;
+}
+
+#pile-1 {
+	top: 252px;
+	left: 406px;
+}
 
 /*------------------ Positioning the stacks of cards for player/bot ---------------------*/
 .stack {

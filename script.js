@@ -3,6 +3,9 @@ import { Player } from './Player.js';
 
 /* Global Variables */
 let z = 0;		//global z-index value
+const reload = document.querySelector('.reload');
+const play = document.querySelector('.play-game');
+
 const deck = createDeck();		//global var for deck
 
 const deckContainer = document.querySelector('.deck-container');
@@ -12,7 +15,6 @@ const playerDeckContainer = document.querySelector('.player-deck-container');
 const playerDeck = playerDeckContainer.children;
 const botDeckContainer = document.querySelector('.bot-deck-container');
 const botDeck = botDeckContainer.children;
-const reload = document.querySelector('.reload');
 
 var playerDeckRect = playerDeckContainer.getBoundingClientRect();
 //console.log(playerDeckRect);
@@ -34,8 +36,10 @@ reload.addEventListener('click', function () {
 });
 
 
+play.addEventListener('click', function() {
+	initializeGame();
+});
 
-initializeGame();
 
 function initializeGame() {
 	createCards();
@@ -65,7 +69,7 @@ function dealDeckToStack() {
 			let tween = gsap.to(child, {
 				top: playerStackRect.top - playerDeckRect.top,
 				left: playerStackRect.left - playerDeckRect.left,
-				duration: 0.5,
+				duration: 0.3,
 				//delay: 0.02 * i,
 				onComplete: () => {
 					child.style.top = `${0}px`;
@@ -98,7 +102,7 @@ function dealDeckToStack() {
 			let tween = gsap.to(child, {
 				top: botStackRect.top - botDeckRect.top,
 				left: botStackRect.left - botDeckRect.left,
-				duration: 0.5,
+				duration: 0.3,
 				//delay: 0.02 * i,
 				onComplete: () => {
 					child.style.top = `${0}px`;
@@ -108,7 +112,7 @@ function dealDeckToStack() {
 						Math.round(Math.random() * 4) * (Math.round(Math.random()) ? 1 : -1)
 					}deg)`;
 					botStackContainer.appendChild(child);
-					
+
 					if (j === i) {
 						//the first card of each stack is dealt upright
 						let imgElem = child.querySelector('img');
